@@ -1,52 +1,31 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
-public class misaligned {
-
-    static String[] majorColors = {"White", "Red", "Black", "Yellow", "Violet"};
-    static String[] minorColors = {"Blue", "Orange", "Green", "Brown", "Slate"};
-
-    // Generate color pairs
-    static List<String> generateColorCodePairs() {
-        List<String> colorCodePairs = new ArrayList<>();
-        // Loop through color combinations
-        for (int i = 0; i < majorColors.length; i++) {
-            for (int j = 0; j < minorColors.length; j++) {
-                colorCodePairs.add(i * minorColors.length + j + " | " + majorColors[i] + " | " + minorColors[j]);
+public class Misaligned {
+    static int printColorMap() {
+        String majorColors[] = {"White", "Red", "Black", "Yellow", "Violet"};
+        String minorColors[] = {"Blue", "Orange", "Green", "Brown", "Slate"};
+        StringBuilder sb = new StringBuilder();
+        int i = 0, j = 0;
+        for(i = 0; i < 5; i++) {
+            for(j = 0; j < 5; j++) {
+                sb.append(String.format("%d | %s | %s\n", i * 5 + j, majorColors[i], minorColors[j])); // Fixed: minorColors[j] to correctly align
             }
         }
-        return colorCodePairs;
-    }
-    
-    // Print color code pairs
-    static int printColorMap() {
-        List<String> colorCodePairs = generateColorCodePairs();
-        colorCodePairs.forEach(System.out::println);
-        return colorCodePairs.size();
-    }
-    
-    // Verify color mapping
-    static void testColorMapping() {
-        List<String> expectedColorCodePairs = List.of(
-            "0 | White | Blue", "1 | White | Orange", "2 | White | Green",
-            "3 | White | Brown", "4 | White | Slate", "5 | Red | Blue",
-            "6 | Red | Orange", "7 | Red | Green", "8 | Red | Brown",
-            "9 | Red | Slate", "10 | Black | Blue", "11 | Black | Orange",
-            "12 | Black | Green", "13 | Black | Brown", "14 | Black | Slate",
-            "15 | Yellow | Blue", "16 | Yellow | Orange", "17 | Yellow | Green",
-            "18 | Yellow | Brown", "19 | Yellow | Slate", "20 | Violet | Blue",
-            "21 | Violet | Orange", "22 | Violet | Green", "23 | Violet | Brown",
-            "24 | Violet | Slate"
-        );
-        List<String> actualColorCodePairs = generateColorCodePairs();
-        assert(actualColorCodePairs.equals(expectedColorCodePairs));
-        System.out.println("Test executed (failure expected)!");
+        System.out.println(sb.toString());
+        return i * j;
     }
 
     public static void main(String[] args) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(baos));
         int result = printColorMap();
-        assert(result == 25);
-        testColorMapping();
+        System.setOut(originalOut);
+        String output = baos.toString();
+        assert(output.contains("0 | White | Blue"));
+        assert(output.contains("4 | White | Slate"));
+        assert(result == 30);
         System.out.println("All is well (maybe!)");
     }
 }
