@@ -1,7 +1,7 @@
 public class alerter {
     interface NetworkAlert {
         int sendAlert(float celcius);
-    }
+    } 
 
     // Stub for network alert
     static class NetworkAlertStub implements NetworkAlert {
