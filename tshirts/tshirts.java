@@ -1,21 +1,22 @@
-public class TShirts {
-    static String size(int cms) {
-        if (cms < 38) {
-            return "S"; // Small size for measurements less than 38 cm
-        } else if (cms >= 38 && cms < 42) { // Medium size for measurements 38 to 41 cm
-            return "M";
+public class tshirts {
+    // Determine T-shirt size based on chest measurement
+    static String getSizeCategory(int measurement) {
+        if (measurement < 38) {
+            return "S"; // Return 'S' for measurements below 38 cm
+        } else if (measurement < 42) {
+            return "M"; // Return 'M' for measurements between 38 and 41 cm
         } else {
-            return "L"; // Large size for measurements 42 cm or above
+            return "L"; // Return 'L' for measurements 42 cm or more
         }
     }
 
     public static void main(String[] args) {
-        // Test cases for size determination
-        assert(size(37).equals("S"));
-        assert(size(38).equals("M"));
-        assert(size(40).equals("M"));
-        assert(size(42).equals("L")); // Corrected: 42 should return "L"
-        assert(size(43).equals("L"));
+        // Verify the T-shirt size categories with various inputs
+        assert(getSizeCategory(37).equals("S"));
+        assert(getSizeCategory(38).equals("M"));
+        assert(getSizeCategory(40).equals("M"));
+        assert(getSizeCategory(42).equals("L"));
+        assert(getSizeCategory(43).equals("L"));
         System.out.println("All is well (maybe!)");
     }
 }
