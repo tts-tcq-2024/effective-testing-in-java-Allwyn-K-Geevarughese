@@ -1,27 +1,37 @@
-public class Alerter {
-    static int alertFailureCount = 0;
-    static int networkAlertStub(float celcius) {
-        System.out.println("ALERT: Temperature is " + celcius + " celcius");
-        // Return 200 for ok
-        // Return 500 for not-ok
-        // stub always succeeds and returns 200
-        return 200;
-    }
-    static void alertInCelcius(float farenheit) {
-        float celcius = (farenheit - 32) * 5 / 9;
-        int returnCode = networkAlertStub(celcius);
-        if (returnCode != 200) {
-            // non-ok response is not an error! Issues happen in life!
-            // let us keep a count of failures to report
-            // However, this code doesn't count failures!
-            // Add a test below to catch this bug. Alter the stub above, if needed.
-            alertFailureCount += 0;
+public class alerter {
+    interface NetworkAlert {
+        int sendAlert(float celcius);
+    } 
+
+    // Stub for network alert
+    static class NetworkAlertStub implements NetworkAlert {
+        @Override
+        public int sendAlert(float celcius) {
+            System.out.println("ALERT: Temperature is " + celcius + " celcius");
+            return (celcius > 200) ? 500 : 200;
         }
     }
+
+    static class alerter {
+        static int alertFailureCount = 0;
+        static NetworkAlert networkAlert = new NetworkAlertStub();
+
+        // Convert Fahrenheit to Celsius
+        static void alertInCelcius(float fahrenheit) {
+            float celcius = (fahrenheit - 32) * 5 / 9;
+            int returnCode = networkAlert.sendAlert(celcius);
+            // Check for alert failure
+            if (returnCode != 200) {
+                alertFailureCount++;
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        alertInCelcius(400.5f);
-        alertInCelcius(303.6f);
-        System.out.printf("%d alerts failed.\n", alertFailureCount);
+        alerter.alertInCelcius(400.5f);
+        alerter.alertInCelcius(303.6f);
+        assert alerter.alertFailureCount == 1 : "Expected 1 failure, but got " + alerter.alertFailureCount;
+        System.out.printf("%d alerts failed.\n", alerter.alertFailureCount);
         System.out.println("All is well (maybe!)\n");
     }
 }
