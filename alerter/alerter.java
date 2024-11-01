@@ -12,7 +12,7 @@ public class alerter {
         }
     }
 
-    static class Alerter {
+    static class alerter {
         static int alertFailureCount = 0;
         static NetworkAlert networkAlert = new NetworkAlertStub();
 
@@ -28,10 +28,10 @@ public class alerter {
     }
 
     public static void main(String[] args) {
-        Alerter.alertInCelcius(400.5f);
-        Alerter.alertInCelcius(303.6f);
-        assert Alerter.alertFailureCount == 1 : "Expected 1 failure, but got " + Alerter.alertFailureCount;
-        System.out.printf("%d alerts failed.\n", Alerter.alertFailureCount);
+        alerter.alertInCelcius(400.5f);
+        alerter.alertInCelcius(303.6f);
+        assert alerter.alertFailureCount == 1 : "Expected 1 failure, but got " + alerter.alertFailureCount;
+        System.out.printf("%d alerts failed.\n", alerter.alertFailureCount);
         System.out.println("All is well (maybe!)\n");
     }
 }
