@@ -6,7 +6,7 @@ public class Alerter {
         // Return 500 for not-ok
         // stub always succeeds and returns 200
         return 200;
-    }
+    } 
     static void alertInCelcius(float farenheit) {
         float celcius = (farenheit - 32) * 5 / 9;
         int returnCode = networkAlertStub(celcius);
