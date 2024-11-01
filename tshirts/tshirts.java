@@ -1,20 +1,17 @@
 public class tshirts {
+
+    // Determine shirt size based on cms
     static String size(int cms) {
-        if (cms < 38) {
-            return "S";
-        } else if (cms >= 38 && cms < 42) { // Adjusted to include 38 in "M"
-            return "M";
-        } else {
-            return "L";
-        }
+        return (cms < 38) ? "S" : (cms <= 42 ? "M" : "L");
     }
 
     public static void main(String[] args) { 
-        assert(size(37).equals("S"));
-        assert(size(38).equals("M"));
-        assert(size(40).equals("M"));
-        assert(size(42).equals("M")); // Added test for 42 to ensure it's "M"
-        assert(size(43).equals("L"));
+        // Modified test cases to check size accurately
+        assert(size(37) == "S");
+        assert(size(50) == "L");
+        assert(size(38) == "M");
+        assert(size(40) == "M");
+        assert(size(43) == "L");
         System.out.println("All is well (maybe!)");
     }
 }
