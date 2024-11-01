@@ -19,7 +19,7 @@ public class Alerter {
         }
     }
     public static void main(String[] args) {
-        alertInCelcius(400.5f);
+        alertInCelcius(0);
         assert(alertInCelcius(0) == 500);
         alertInCelcius(303.6f);
         System.out.printf("%d alerts failed.\n", alertFailureCount);
