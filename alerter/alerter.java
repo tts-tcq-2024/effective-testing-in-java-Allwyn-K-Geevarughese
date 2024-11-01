@@ -1,28 +1,33 @@
-public class Alerter {
-    static int alertFailureCount = 0;
-    static int networkAlertStub(float celcius) {
-        System.out.println("ALERT: Temperature is " + celcius + " celcius");
-        // Return 200 for ok
-        // Return 500 for not-ok
-        // stub always succeeds and returns 200
-        return 200;
-    } 
-    static void alertInCelcius(float farenheit) {
-        float celcius = (farenheit - 32) * 5 / 9;
-        int returnCode = networkAlertStub(celcius);
-        if (returnCode != 200) {
-            // non-ok response is not an error! Issues happen in life!
-            // let us keep a count of failures to report
-            // However, this code doesn't count failures!
-            // Add a test below to catch this bug. Alter the stub above, if needed.
-            alertFailureCount += 0;
+public class alerter {
+    static int alertFailureCounter = 0;
+    static boolean isNetworkDown = false; // Toggle for network simulation
+
+    static int simulateNetworkAlert(float temperature) {
+        System.out.println("ALERT: Temperature is " + temperature + " celcius");
+        // Return 500 if network is down; otherwise, return 200
+        return isNetworkDown ? 500 : 200;
+    }
+
+    static void triggerAlertInCelcius(float temperatureFahrenheit) {
+        float temperatureCelcius = (temperatureFahrenheit - 32) * 5 / 9; // Convert Fahrenheit to Celsius
+        int responseCode = simulateNetworkAlert(temperatureCelcius);
+        if (responseCode != 200) {
+            alertFailureCounter++; // Increment count on non-OK response
         }
     }
+
     public static void main(String[] args) {
-        alertInCelcius(0);
-        assert(alertInCelcius(0) == 500);
-        alertInCelcius(303.6f);
-        System.out.printf("%d alerts failed.\n", alertFailureCount);
-        System.out.println("All is well (maybe!)\n");
+        // Testing alerts with network up
+        triggerAlertInCelcius(400.5f);
+        triggerAlertInCelcius(303.6f);
+        System.out.printf("%d alerts failed.\n", alertFailureCounter);
+
+        // Toggle network down and retest alerts
+        isNetworkDown = true;
+        triggerAlertInCelcius(400.5f);
+        triggerAlertInCelcius(303.6f);
+        System.out.printf("%d alerts failed after simulation.\n", alertFailureCounter);
+
+        System.out.println("All is well (maybe!)");
     }
 }
